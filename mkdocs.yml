@@ -1,0 +1,35 @@
+---
+strict: true
+site_name: p360-contact-manager
+site_description: Define a user story in the business transaction DSL.
+theme:
+  name: material
+  palette:
+    primary: deep-purple
+    accent: deep-purple
+  icon:
+    logo: material/language-python
+  language: en
+  features:
+    - tabs
+repo_name: greenbird/p360-contact-manager
+repo_url: https://github.com/greenbird/p360-contact-manager
+edit_uri: ""
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+nav:
+  - Home:
+      - Home: index.md
+      - Why: why.md
+      - Usage: usage.md
+      - FAQ: faq.md
+  - Contribution:
+      - Contribution: contrib/contributing.md
