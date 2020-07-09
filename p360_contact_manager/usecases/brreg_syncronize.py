@@ -76,7 +76,7 @@ class BrregSyncronize(object):
 
         return worklist
 
-    @safe  # noqa: C901 - its too complex, but... thats okay for now
+    @safe
     def _map_brreg_data_to_p360(
         self, brreg_data: dict,
     ) -> dict:

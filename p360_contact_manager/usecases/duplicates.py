@@ -78,7 +78,7 @@ class Duplicates(object):
     @safe
     def _remove_non_duplicates(self, payload) -> dict:
 
-        for org_no in [org_no for org_no in payload.keys()]:
+        for org_no in list(payload.keys()):
             if len(payload[org_no]) == 1:
                 payload.pop(org_no)
 
@@ -87,7 +87,7 @@ class Duplicates(object):
     @safe
     def _restructure_data(self, org_dict: dict) -> dict:
         restructured: dict = {UPDATE: [], SKIP: []}
-        for orgno in org_dict:
+        for orgno in org_dict:  # noqa: WPS528
             temp = self._restructure_with_skip(org_dict[orgno])
             if is_successful(temp):
                 restructured[UPDATE].extend(temp.unwrap().get(UPDATE))

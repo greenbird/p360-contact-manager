@@ -96,8 +96,6 @@ class ReadLocalFile(object):
     """
     Reads local file.
 
-    .. versionadded:: 0.1.0
-
     :param file_path: path to the file to read.
     :type file_path: str
 
@@ -136,8 +134,6 @@ class ReadLocalFile(object):
 class WriteLocalFile(object):
     """
     Reads local file.
-
-    .. versionadded:: 0.1.0
 
     :param file_path: path to the file to read.
     :type file_path: str
