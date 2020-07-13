@@ -2,13 +2,13 @@
 
 """Package to get list of duplicate enterprises in ContactService API."""
 
-import argparse
 import logging
+import sys
 
 from dependencies import Injector
-from typing_extensions import Final
 
 from p360_contact_manager.api import p360
+from p360_contact_manager.arguments import ArgsParser
 from p360_contact_manager.common import ConfigureLogging, ReadLocalFile
 from p360_contact_manager.injected import (
     BrregSynchronizeScope,
@@ -19,97 +19,10 @@ from p360_contact_manager.injected import (
     UpdateScope,
 )
 
-DEFAULT_ERROR_MARGIN: Final[int] = 50
-
-
 ConfigureLogging()()
 log = logging.getLogger('main')
 
-parser = argparse.ArgumentParser(
-    description='Public 360 Contact Service Enterprise manager',
-)
-
-parser.add_argument(
-    'action',
-    choices=[
-        'test',
-        'cache_enterprises',
-        'find_malformed_external',
-        'find_malformed_internal',
-        'duplicates',
-        'enrich',
-        'update',
-        'brreg_syncronize',
-        'syncronize',
-    ],
-    help='test connection, cache enterprises, worklist, remove, enrich',
-)
-
-parser.add_argument(
-    '-ak',
-    '--authkey',
-    type=str,
-    required=True,
-    help='Autorization key for ContactService API',
-)
-
-parser.add_argument(
-    '-pbu',
-    '--p360_base_url',
-    type=str,
-    help='Base url to ContactService API',
-    default=None,
-)
-
-parser.add_argument(
-    '-bu',
-    '--brreg_base_url',
-    type=str,
-    help='Base url to Brønnoysundregisteret API',
-    default='https://data.brreg.no/enhetsregisteret/api/',
-)
-
-parser.add_argument(
-    '-w',
-    '--worklist',
-    type=str,
-    help='worklist to use when updating',
-    default='remove_worklist.json',
-)
-
-parser.add_argument(
-    '-kn',
-    '--kommune_numbers',
-    type=str,
-    help='Comma seperated list of norwegian Kommune numbers',
-    default='0301',  # oslo
-)
-
-parser.add_argument(
-    '-c',
-    '--cached',
-    action='store_true',
-    default=False,
-    help='use data from cache.json',
-)
-
-parser.add_argument(
-    '-d',
-    '--dry',
-    action='store_true',
-    default=False,
-    help='This will prevent any updates from actually being sent in remove',
-)
-
-parser.add_argument(
-    '-em',
-    '--error_margin',
-    type=int,
-    default=DEFAULT_ERROR_MARGIN,
-    help='After failure to update has happened x times, program will stop',
-)
-
-args = parser.parse_args()
+args = ArgsParser()(sys.argv[1:]).unwrap()
 
 Scope = Injector.let(
     dry=args.dry,

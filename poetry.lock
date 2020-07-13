@@ -744,7 +744,7 @@ description = "Make your functions return something meaningful, typed, and safe!
 name = "returns"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.11.0"
+version = "0.13.0"
 
 [package.dependencies]
 typing-extensions = ">=3.7,<4.0"
@@ -901,7 +901,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "5cd028f96a8c0110adb5107b3f9b3418c13faf01542b0964972ca9a7f5b60e77"
+content-hash = "afccb92a567b204b33411258f20b8d1e20b15c51c9dc47c80bacc34000fe29b3"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1221,8 +1221,8 @@ restructuredtext-lint = [
     {file = "restructuredtext_lint-1.3.1.tar.gz", hash = "sha256:470e53b64817211a42805c3a104d2216f6f5834b22fe7adb637d1de4d6501fb8"},
 ]
 returns = [
-    {file = "returns-0.11.0-py3-none-any.whl", hash = "sha256:c70de72c2c4ac0adee77320933f2c80b9b153e0bed8bf8aa3e428a19b5006225"},
-    {file = "returns-0.11.0.tar.gz", hash = "sha256:5881eb97daa4d62d513104fa4520e625f90d2a9ff7d7827e1cda21645c5b0c76"},
+    {file = "returns-0.13.0-py3-none-any.whl", hash = "sha256:2de5bd9c1a754c76aead1af33cd183ad0ed71fa7199cf67865e28f4fae349b6c"},
+    {file = "returns-0.13.0.tar.gz", hash = "sha256:6003e1a4ef414ec36b42b1cf29a8a87c65f305ab5c9ef7a794eaa4cfb5ad5b6e"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
