@@ -42,10 +42,8 @@ class TestArgsParser(object):  # noqa: WPS214
         """Parse when no auth keys."""
         response = self.parser([ACTION])
         assert not is_successful(response)
-        assert response.failure().args == (
-            'Error: pytest: error: the following arguments'
-            ' are required: -ak/--authkey\n',  # noqa: WPS326
-        )
+        string = 'error: the following arguments are required: -ak/--authkey'
+        assert string in response.failure().args[0]
 
     def test_short_auth_key(self):
         """Test auth key with short arg version."""
@@ -178,5 +176,13 @@ class TestArgsParser(object):  # noqa: WPS214
     def test_invalid_action_key(self):
         """Test invalid action key."""
         response = self.parser(['clean_code', '-ak', AUTH_KEY])
+
+        string = 'error: argument action: invalid choice: {0}{1}{2}{3}'.format(
+            "'clean_code' (choose from 'test', 'cache_enterprises', ",
+            "'find_malformed_external', 'find_malformed_internal', ",
+            "'duplicates', 'enrich', 'update', 'brreg_syncronize', ",
+            "'syncronize')",
+        )
+
         assert not is_successful(response)
-        assert response.failure().args == ("Error: pytest: error: argument action: invalid choice: 'clean_code' (choose from 'test', 'cache_enterprises', 'find_malformed_external', 'find_malformed_internal', 'duplicates', 'enrich', 'update', 'brreg_syncronize', 'syncronize')\n",)  # noqa: E501
+        assert string in response.failure().args[0]
