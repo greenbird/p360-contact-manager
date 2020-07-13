@@ -8,7 +8,7 @@ from typing import Callable
 import requests
 from attr import dataclass
 from returns.pipeline import is_successful, pipeline
-from returns.result import Result, safe
+from returns.result import ResultE, Success, safe
 from typing_extensions import Final, final
 
 URL_PARAM_AUTHKEY: Final[str] = 'authkey'
@@ -26,14 +26,14 @@ class Ping(object):
     _dry: bool = False
     _endpoint = 'Ping'
 
-    @pipeline
+    @pipeline(ResultE[requests.Response])
     def __call__(
         self,
         timeout: int = 10,
-    ) -> Result[requests.Response, Exception]:
+    ) -> ResultE[requests.Response]:
         """Call api get list and write to file."""
         if self._dry:
-            return 'DRY RUN: No API calls executed'  # type: ignore
+            return Success('DRY RUN: No API calls executed')  # type: ignore
 
         return self._post(
             self._p360_base_url + self._endpoint,
@@ -63,7 +63,7 @@ class UpdateEnterprise(object):
     ) -> requests.Response:
         """Call api get list and write to file."""
         if self._dry:
-            return 'DRY RUN: No API calls executed'  # type: ignore
+            return 'DRY RUN: No API calls executed'
 
         response = self._post(
             self._p360_base_url + self._endpoint,
@@ -143,8 +143,8 @@ class GetEnterprises(object):
         """Call api get list and write to file."""
         response = self._post(
             self._p360_base_url + self._endpoint,
-            url_params={URL_PARAM_AUTHKEY: self._authkey},
             payload=payload,
+            url_params={URL_PARAM_AUTHKEY: self._authkey},
             timeout=timeout,
         )
 
@@ -171,7 +171,7 @@ class GetAllEnterprises(object):
     _base_payload: dict
 
     @safe
-    def __call__(self) -> Result[dict, Exception]:
+    def __call__(self) -> dict:
         """Use payload and get all enterprises."""
         payload = deepcopy(self._base_payload)
 
@@ -188,9 +188,7 @@ class GetAllEnterprises(object):
 
         return aggregated
 
-    @pipeline
-    def _call_api(self, payload) -> Result[list, Exception]:
-
+    def _call_api(self, payload) -> ResultE[list]:
         return self._get_enterprises(payload).map(
             lambda response: response.get('Enterprises'),
         )
@@ -205,7 +203,7 @@ class GetAllCachedEnterprises(object):
     _cache_file: str
 
     @pipeline
-    def __call__(self) -> Result[dict, Exception]:
+    def __call__(self) -> ResultE[dict]:
         """Read data load to json and return."""
         return self._read(self._cache_file, 'r').map(
             json.loads,

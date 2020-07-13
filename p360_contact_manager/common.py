@@ -3,7 +3,7 @@
 """Common functions for contactservice package."""
 
 import logging
-from typing import Any, overload
+from typing import Any, Optional, overload
 
 import requests
 from attr import dataclass
@@ -52,16 +52,15 @@ class GetRequest(object):
     def __call__(
         self,
         url: str,
-        url_params: dict,
+        url_params: Optional[dict] = None,
         timeout: int = 10,
     ) -> requests.Response:
-        """Do post call."""
+        """Do get call."""
         response = self._requests.get(
             url,
             params=url_params,
             timeout=timeout,
         )
-
         response.raise_for_status()
 
         return response

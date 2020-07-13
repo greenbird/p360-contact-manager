@@ -8,7 +8,7 @@ from typing import Callable
 from attr import dataclass
 from returns.functions import tap
 from returns.pipeline import pipeline
-from returns.result import Result, safe
+from returns.result import ResultE, safe
 from typing_extensions import final
 
 
@@ -23,28 +23,23 @@ class GetOrganization(object):
     _entities = 'enheter/'
     _sub_entities = 'underenheter/'
 
-    @pipeline
+    @pipeline(ResultE[dict])
     def __call__(
         self,
         organization_number: str,
-    ) -> Result[dict, Exception]:
+    ) -> ResultE[dict]:
         """Call api get list and write to file."""
-        return self._call_brreg(
-            self._entities, organization_number,
+        return self._get(
+            self._brreg_base_url + self._entities + organization_number,
         ).rescue(
-            lambda _: self._call_brreg(
-                self._sub_entities, organization_number,
+            lambda _: self._get(
+                self._brreg_base_url
+                + self._sub_entities  # noqa: W503
+                + organization_number,  # noqa: W503
             ),
+        ).map(
+            lambda response: response.json(),
         )
-
-    @safe
-    def _call_brreg(self, endpoint, org_no) -> dict:
-        response = self._get(
-            self._brreg_base_url + endpoint + org_no,
-            timeout=10,
-        )
-        response.raise_for_status()
-        return response.json()
 
 
 @final
@@ -60,12 +55,12 @@ class GetOrganizations(object):
 
     _log = logging.getLogger('api.brreg.GetOrganizations')
 
-    @pipeline
+    @pipeline(ResultE[list])
     def __call__(
         self,
         search_criteria: dict,
         timeout: int = 20,
-    ) -> Result[list, Exception]:
+    ) -> ResultE[list]:
         """Call api with the search criteria and and return list."""
         return self._get(
             self._brreg_base_url + self._entities,
@@ -81,7 +76,7 @@ class GetOrganizations(object):
 @final
 @dataclass(frozen=True, slots=True)
 class GetAllOrganizations(object):
-    """Get a list of organizations with the given criteria."""
+    """Get an accumulated list of organizations with the given criteria."""
 
     _get_organizations: Callable
 
@@ -114,7 +109,7 @@ class GetAllOrganizations(object):
                 self._paginator(search_criteria).map(
                     all_orgs.extend,
                 ).alt(
-                    tap(self._log.warning),
+                    tap(print),
                 )
 
         return all_orgs
@@ -148,8 +143,8 @@ class GetAllOrganizations(object):
 
         return aggregated_data['_embedded']['enheter']
 
-    @pipeline
-    def _call_api(self, search_criteria) -> Result[list, Exception]:
+    @pipeline(ResultE[list])
+    def _call_api(self, search_criteria) -> ResultE[list]:
         return self._get_organizations(
             search_criteria,
         ).map(
