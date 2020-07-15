@@ -87,7 +87,6 @@ def test_get_all_organizations_failure():
             'https://data.brreg.no/enhetsregisteret/api/',
             GetRequest(),
         ),
-        GetRequest(),
     )(search_criteria)
 
     assert not is_successful(org_result)

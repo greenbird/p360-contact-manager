@@ -6,7 +6,7 @@ from typing import Callable
 
 from attr import dataclass
 from returns.pipeline import pipeline
-from returns.result import Result
+from returns.result import ResultE
 from typing_extensions import final
 
 
@@ -18,8 +18,8 @@ class CacheEnterprises(object):
     _get_all_enterprises: Callable
     _write: Callable
 
-    @pipeline
-    def __call__(self) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def __call__(self) -> ResultE[bool]:
         """Call api get list and write to file."""
         return self._get_all_enterprises().map(
             json.dumps,
@@ -27,8 +27,8 @@ class CacheEnterprises(object):
             self._write_file,
         )
 
-    @pipeline
-    def _write_file(self, output_data) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
             'cache.json',
             output_data,

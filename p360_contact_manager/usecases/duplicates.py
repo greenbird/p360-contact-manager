@@ -9,7 +9,7 @@ from typing import Callable
 
 from attr import dataclass
 from returns.pipeline import is_successful, pipeline
-from returns.result import Result, safe
+from returns.result import ResultE, safe
 from typing_extensions import Final, final
 
 RECNO: Final[str] = 'Recno'
@@ -29,8 +29,8 @@ class Duplicates(object):
 
     _log = logging.getLogger('produce_list')
 
-    @pipeline
-    def __call__(self) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def __call__(self) -> ResultE[bool]:
         """Load enterprises, remove duplicates, restructure, write worklist."""
         return self._get_all_enterprises().bind(  # noqa: WPS221 allow complex
             self._group_by_org_no,
@@ -46,8 +46,8 @@ class Duplicates(object):
             self._write_file,
         )
 
-    @pipeline
-    def _write_file(self, output_data) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
             self._duplicate_worklist,
             output_data,

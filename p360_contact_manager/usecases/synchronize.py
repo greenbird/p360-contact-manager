@@ -8,7 +8,7 @@ from typing import Callable
 
 from attr import dataclass
 from returns.pipeline import is_successful, pipeline
-from returns.result import Result, safe
+from returns.result import ResultE, safe
 from typing_extensions import final
 
 
@@ -27,8 +27,8 @@ class Synchronize(object):
 
     _log = logging.getLogger('usecases.Synchronize')
 
-    @pipeline
-    def __call__(self) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def __call__(self) -> ResultE[bool]:
         """Read worklist, synchronize to p360, write result file."""
         return self._read(
             self._worklist, 'r',
@@ -42,8 +42,8 @@ class Synchronize(object):
             self._write_result,
         )
 
-    @pipeline
-    def _write_result(self, output_data) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def _write_result(self, output_data) -> ResultE[bool]:
         return self._write(
             '{name}_{date}.json'.format(
                 name=self._synchronize_result,
@@ -54,12 +54,14 @@ class Synchronize(object):
 
     @safe
     def _handle_worklist(self, worklist: list) -> dict:
+        """Handle the input worklist file.
 
-        # loop enterprises
-        # call synchronize endpoint
-        # if okay, put to okay,
-        # if bad, put to bad with error_message
-        # continue
+        Loop enterprises
+        call synchronize endpoint
+        if okay, put to okay,
+        if bad, put to bad with error_message
+        continue
+        """
         sync_result: dict = {
             'errors': 0,
             'synchronized': [],

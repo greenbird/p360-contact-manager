@@ -9,7 +9,7 @@ import requests
 from attr import dataclass
 from iso3166 import countries
 from returns.pipeline import pipeline
-from returns.result import Result, safe
+from returns.result import ResultE, safe
 from typing_extensions import Literal, final
 
 
@@ -74,8 +74,8 @@ class GetCountryCode(object):
     # dependiencies, country package
     _countries = countries
 
-    @pipeline
-    def __call__(self, code: str):
+    @pipeline(ResultE[str])
+    def __call__(self, code: str) -> ResultE[str]:
         """Find country by code or name."""
         code = str(code).strip()
         return self._get(
@@ -108,17 +108,17 @@ class ReadLocalFile(object):
     @overload
     def __call__(
         self, file_path: str, mode: Literal['r'],
-    ) -> Result[str, Exception]:
+    ) -> ResultE[str]:
         """When 'r' is supplied we return 'str'."""
 
     @overload  # noqa: WPS440, F811
     def __call__(
         self, file_path: str, mode: Literal['rb'],
-    ) -> Result[bytes, Exception]:
+    ) -> ResultE[bytes]:
         """When 'rb' is supplied we return 'bytes' instead of a 'str'."""
 
     @overload  # noqa: WPS440, F811
-    def __call__(self, file_path: str, mode: str) -> Result[Any, Exception]:
+    def __call__(self, file_path: str, mode: str) -> ResultE[Any]:
         """Any other options might return Any-thing!."""
 
     @safe  # noqa: WPS440, F811

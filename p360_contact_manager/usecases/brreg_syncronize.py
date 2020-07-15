@@ -9,7 +9,7 @@ from typing import Callable
 from attr import dataclass
 from returns.maybe import Maybe
 from returns.pipeline import is_successful, pipeline
-from returns.result import Result, safe
+from returns.result import ResultE, safe
 from typing_extensions import Final, final
 
 RECNO: Final = 'Recno'
@@ -23,15 +23,15 @@ class BrregSyncronize(object):
     _brreg_worklist: str
     _search_criteria: dict
     _kommune_numbers: str
+
     _get_all_organizations: Callable
     _write: Callable
-
     _get_country: Callable
 
     _log = logging.getLogger('usecases.BrregSyncronize')
 
-    @pipeline
-    def __call__(self) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def __call__(self) -> ResultE[bool]:
         """Call api get list and write to file."""
         self._search_criteria['kommunenummer'] = self._kommune_numbers
 
@@ -45,8 +45,8 @@ class BrregSyncronize(object):
             self._write_file,
         )
 
-    @pipeline
-    def _write_file(self, output_data) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
             self._brreg_worklist,
             output_data,
@@ -54,7 +54,6 @@ class BrregSyncronize(object):
 
     @safe
     def _create_worklist(self, brreg_list: list) -> list:
-
         self._log.info('Number of entities %s', len(brreg_list))
         worklist = []
 

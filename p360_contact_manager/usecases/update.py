@@ -8,7 +8,7 @@ from typing import Callable
 
 from attr import dataclass
 from returns.pipeline import is_successful, pipeline
-from returns.result import Result, safe
+from returns.result import ResultE, safe
 from typing_extensions import Final, final
 
 RECNO: Final = 'Recno'
@@ -29,8 +29,8 @@ class Update(object):
 
     _log = logging.getLogger('usecases.Update')
 
-    @pipeline
-    def __call__(self) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def __call__(self) -> ResultE[bool]:
         """Read worklist, update to p360, write result file."""
         return self._read(
             self._worklist, 'r',
@@ -46,8 +46,8 @@ class Update(object):
             self._write_result,
         )
 
-    @pipeline
-    def _write_result(self, output_data) -> Result[bool, Exception]:
+    @pipeline(ResultE[bool])
+    def _write_result(self, output_data) -> ResultE[bool]:
         return self._write(
             '{name}_{date}.json'.format(
                 name=self._update_result,
