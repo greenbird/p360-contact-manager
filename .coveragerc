@@ -1,0 +1,2 @@
+[run]
+omit = p360_contact_manager/__main__.py
