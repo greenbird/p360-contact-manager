@@ -8,7 +8,8 @@ from typing import Callable
 
 from attr import dataclass
 from returns.maybe import Maybe
-from returns.pipeline import is_successful, pipeline
+from returns.pipeline import flow, is_successful
+from returns.pointfree import bind
 from returns.result import ResultE, safe
 from typing_extensions import Final, final
 
@@ -30,22 +31,18 @@ class BrregSyncronize(object):
 
     _log = logging.getLogger('usecases.BrregSyncronize')
 
-    @pipeline(ResultE[bool])
     def __call__(self) -> ResultE[bool]:
         """Call api get list and write to file."""
         self._search_criteria['kommunenummer'] = self._kommune_numbers
 
-        return self._get_all_organizations(
+        return flow(
             self._search_criteria,
-        ).bind(
-            self._create_worklist,
-        ).map(
-            json.dumps,
-        ).bind(
-            self._write_file,
+            self._get_all_organizations,
+            bind(self._create_worklist),
+            bind(safe(json.dumps)),  # safe wrap impure json.dumps
+            bind(self._write_file),
         )
 
-    @pipeline(ResultE[bool])
     def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
             self._brreg_worklist,
@@ -91,10 +88,10 @@ class BrregSyncronize(object):
                 ),
             )
 
-        Maybe.new(brreg_data.get('navn')).map(
+        Maybe.from_value(brreg_data.get('navn')).map(
             lambda name: p360_payload.update({'Name': name}),
         )
-        Maybe.new(brreg_data.get('hjemmeside')).map(
+        Maybe.from_value(brreg_data.get('hjemmeside')).map(
             lambda web: p360_payload.update({'Web': web}),
         )
 
@@ -120,7 +117,7 @@ class BrregSyncronize(object):
             if not is_successful(country):
                 raise country.failure()
 
-            Maybe.new(post.get('kommune')).map(
+            Maybe.from_value(post.get('kommune')).map(
                 lambda web: p360_payload.update({'Web': web}),
             )
 

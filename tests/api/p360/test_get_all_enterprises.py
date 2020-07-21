@@ -1,6 +1,6 @@
 from returns.result import Failure, Success
 
-from p360_contact_manager.api.p360 import GetAllEnterprises
+from p360_contact_manager.api.p360 import GetAllEnterprises, GetEnterprises
 from p360_contact_manager.common import PostRequest
 
 
@@ -51,10 +51,13 @@ def test_get_all_enterprises(mocker):
     post.return_value = Success(GoodResponse())
 
     assert GetAllEnterprises(
-        'authkey',
-        'base_url/',
-        PostRequest(),
-    )({}).unwrap()['Successful']
+        GetEnterprises(
+            'authkey',
+            'base_url/',
+            PostRequest(),
+        ),
+        {},
+    )().unwrap()['Successful']
 
     post.assert_called()
     post.assert_called_with(
@@ -70,11 +73,13 @@ def test_get_all_enterprises_failure(mocker):
     post = mocker.patch('p360_contact_manager.common.PostRequest.__call__')
     post.return_value = Success(BadRequestResponse())
     bad_result = GetAllEnterprises(
-        'authkey',
-        'base_url',
-        PostRequest(),
-    )({})
-
+        GetEnterprises(
+            'authkey',
+            'base_url/',
+            PostRequest(),
+        ),
+        {},
+    )()
     assert 'An error message' in str(bad_result.failure())
     post.assert_called()
 
@@ -84,10 +89,13 @@ def test_get_all_enterprises_response_failure(mocker):
     post = mocker.patch('p360_contact_manager.common.PostRequest.__call__')
     post.return_value = Failure(Exception('Error'))
     bad_result = GetAllEnterprises(
-        'authkey',
-        'base_url',
-        PostRequest(),
-    )({})
+        GetEnterprises(
+            'authkey',
+            'base_url/',
+            PostRequest(),
+        ),
+        {},
+    )()
 
     assert 'Error' in str(bad_result.failure())
     post.assert_called()

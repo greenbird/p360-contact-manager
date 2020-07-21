@@ -7,7 +7,8 @@ from typing import Callable
 
 import requests
 from attr import dataclass
-from returns.pipeline import is_successful, pipeline
+from returns.functions import raise_exception
+from returns.pipeline import is_successful
 from returns.result import ResultE, Success, safe
 from typing_extensions import Final, final
 
@@ -26,7 +27,6 @@ class Ping(object):
     _dry: bool = False
     _endpoint = 'Ping'
 
-    @pipeline(ResultE[requests.Response])
     def __call__(
         self,
         timeout: int = 10,
@@ -63,7 +63,7 @@ class UpdateEnterprise(object):
     ) -> requests.Response:
         """Call api get list and write to file."""
         if self._dry:
-            return 'DRY RUN: No API calls executed'
+            return 'DRY RUN: No API calls executed'  # type: ignore
 
         response = self._post(
             self._p360_base_url + self._endpoint,
@@ -175,7 +175,9 @@ class GetAllEnterprises(object):
         """Use payload and get all enterprises."""
         payload = deepcopy(self._base_payload)
 
-        aggregated = self._get_enterprises(payload).unwrap()
+        aggregated = self._get_enterprises(payload).alt(
+            raise_exception,
+        ).unwrap()
         # create reference to enterprises array in first request
 
         for page in range(1, aggregated['TotalPageCount']):
@@ -202,7 +204,6 @@ class GetAllCachedEnterprises(object):
     _read: Callable
     _cache_file: str
 
-    @pipeline
     def __call__(self) -> ResultE[dict]:
         """Read data load to json and return."""
         return self._read(self._cache_file, 'r').map(

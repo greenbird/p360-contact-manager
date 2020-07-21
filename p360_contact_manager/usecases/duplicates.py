@@ -1,14 +1,11 @@
-# -*- coding: utf-8 -*-
-
-"""Code to produce a list of organizations from ContactService api."""
-
 import json
 import logging
 from copy import deepcopy
 from typing import Callable
 
 from attr import dataclass
-from returns.pipeline import is_successful, pipeline
+from returns.pipeline import flow, is_successful
+from returns.pointfree import bind
 from returns.result import ResultE, safe
 from typing_extensions import Final, final
 
@@ -29,24 +26,18 @@ class Duplicates(object):
 
     _log = logging.getLogger('produce_list')
 
-    @pipeline(ResultE[bool])
     def __call__(self) -> ResultE[bool]:
         """Load enterprises, remove duplicates, restructure, write worklist."""
-        return self._get_all_enterprises().bind(  # noqa: WPS221 allow complex
-            self._group_by_org_no,
-        ).bind(
-            self._remove_non_duplicates,
-        ).bind(
-            self._restructure_data,
-        ).bind(
-            self._restructure_with_payload,
-        ).map(
-            json.dumps,
-        ).bind(
-            self._write_file,
+        return flow(
+            self._get_all_enterprises(),
+            bind(self._group_by_org_no),
+            bind(self._remove_non_duplicates),
+            bind(self._restructure_data),
+            bind(self._restructure_with_payload),
+            bind(safe(json.dumps)),
+            bind(self._write_file),
         )
 
-    @pipeline(ResultE[bool])
     def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
             self._duplicate_worklist,

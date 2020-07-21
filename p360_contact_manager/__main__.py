@@ -37,8 +37,8 @@ Scope = Injector.let(
 
 functions = {
     'test': PingScope,
-    'brreg_syncronize': BrregSynchronizeScope,
-    'syncronize': SynchronizeScope,
+    'brreg_synchronize': BrregSynchronizeScope,
+    'synchronize': SynchronizeScope,
     'cache_enterprises': CacheEnterprisesScope,
     'duplicates': DuplicatesScope,
     'update': UpdateScope,

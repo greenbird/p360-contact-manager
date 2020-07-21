@@ -49,8 +49,8 @@ class ArgsParser(object):
                 'duplicates',
                 'enrich',
                 'update',
-                'brreg_syncronize',
-                'syncronize',
+                'brreg_synchronize',
+                'synchronize',
             ],
             help='test connection, cache enterprises, worklist, remove, enrich',
         )

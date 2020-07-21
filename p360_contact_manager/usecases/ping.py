@@ -4,8 +4,7 @@
 from typing import Callable
 
 from attr import dataclass
-from returns.pipeline import pipeline
-from returns.result import Result
+from returns.result import ResultE
 from typing_extensions import final
 
 
@@ -16,7 +15,6 @@ class Ping(object):
 
     _ping_p360: Callable
 
-    @pipeline
-    def __call__(self) -> Result[bool, Exception]:
+    def __call__(self) -> ResultE[bool]:
         """Call ping function."""
         return self._ping_p360()

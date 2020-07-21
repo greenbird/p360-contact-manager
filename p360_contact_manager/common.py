@@ -8,7 +8,8 @@ from typing import Any, Optional, overload
 import requests
 from attr import dataclass
 from iso3166 import countries
-from returns.pipeline import pipeline
+from returns.pipeline import flow
+from returns.pointfree import alt
 from returns.result import ResultE, safe
 from typing_extensions import Literal, final
 
@@ -74,18 +75,18 @@ class GetCountryCode(object):
     # dependiencies, country package
     _countries = countries
 
-    @pipeline(ResultE[str])
     def __call__(self, code: str) -> ResultE[str]:
         """Find country by code or name."""
-        code = str(code).strip()
-        return self._get(
-            code,
-        ).alt(
-            lambda _: KeyError('No country found with: "{0}"'.format(code)),
+        return flow(
+            str(code).strip(),
+            self._get,
+            alt(lambda _: KeyError(  # type: ignore
+                'No country found with: "{0}"'.format(code),
+            )),
         )
 
     @safe
-    def _get(self, code: str) -> object:
+    def _get(self, code: str) -> str:
         return self._countries.get(code)
 
 
@@ -164,7 +165,7 @@ class ConfigureLogging(object):
         fh.setLevel(logging.INFO)
 
         sh = logging.StreamHandler()
-        sh.setLevel(logging.DEBUG)
+        sh.setLevel(logging.INFO)
 
         formatter = logging.Formatter(
             '%(asctime)s - %(name)s - %(levelname)s - %(message)s',

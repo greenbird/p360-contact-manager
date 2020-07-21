@@ -35,7 +35,6 @@ def test_get_organizations():
         'https://data.brreg.no/enhetsregisteret/api/',
         GetRequest(),
     )(search_criteria)
-
     assert is_successful(org_result)
     assert isinstance(org_result.unwrap()['_embedded']['enheter'], list)
 

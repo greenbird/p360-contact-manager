@@ -7,7 +7,8 @@ from datetime import datetime
 from typing import Callable
 
 from attr import dataclass
-from returns.pipeline import is_successful, pipeline
+from returns.pipeline import flow, is_successful
+from returns.pointfree import bind
 from returns.result import ResultE, safe
 from typing_extensions import final
 
@@ -27,22 +28,16 @@ class Synchronize(object):
 
     _log = logging.getLogger('usecases.Synchronize')
 
-    @pipeline(ResultE[bool])
     def __call__(self) -> ResultE[bool]:
         """Read worklist, synchronize to p360, write result file."""
-        return self._read(
-            self._worklist, 'r',
-        ).map(
-            json.loads,
-        ).bind(
-            self._handle_worklist,
-        ).map(
-            json.dumps,
-        ).bind(
-            self._write_result,
+        return flow(
+            self._read(self._worklist, 'r'),
+            bind(safe(json.loads)),
+            bind(self._handle_worklist),
+            bind(safe(json.dumps)),
+            bind(self._write_result),
         )
 
-    @pipeline(ResultE[bool])
     def _write_result(self, output_data) -> ResultE[bool]:
         return self._write(
             '{name}_{date}.json'.format(

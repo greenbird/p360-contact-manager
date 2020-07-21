@@ -26,15 +26,15 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-requests = "^2.22"
-returns = "^0.13.0"
-dependencies = "^0.15.0"
+requests = "^2.24.0"
+returns = "^0.14.0"
+dependencies = "^2.0.0"
 iso3166 = "^1.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.3"
+pytest = "^5.4.3"
 wemake-python-styleguide = "^0.14.0"
-mypy = "^0.740.0"
+mypy = "^0.782"
 isort = "4.3.21"
 mkdocs-material = "^5.4.0"
 pytest-mock = "^3.2.0"
