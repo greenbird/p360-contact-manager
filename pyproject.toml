@@ -1,8 +1,11 @@
 [tool.poetry]
 name = "p360-contact-manager"
 version = "1.0.0"
-description = "Public 360 application by Tieto has some issues with for example duplicated contacts. This package tries to fix that and adds other functionality like enrichment."
-authors = ["Thomas Borgen <thomas.borgen@greenbird.com>"]
+description = "Public 360 application by Tieto has some issues with for example duplicated contacts. This package tries to fix that and adds other functionality like synchronization(enrichment) with brreg.no."
+authors = [
+    "Thomas Borgen <thomas.borgen@greenbird.com>",
+    "Dmytro Chasovskyi <dmitriy.chasovskoy@gmail.com>"
+]
 
 license = "Apache-2.0"
 readme = "README.md"
@@ -12,7 +15,7 @@ keywords = [
   "Public 360",
   "Contact Manager",
   "Contact Duplication fix",
-  "Contact Enrichment",
+  "BRREG.no Synchronize Enrichment",
   "Functional Programming",
 ]
 
