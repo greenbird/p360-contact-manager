@@ -114,6 +114,22 @@ version = "0.16"
 
 [[package]]
 category = "dev"
+description = "A parser for Python dependency files"
+name = "dparse"
+optional = false
+python-versions = ">=3.5"
+version = "0.5.1"
+
+[package.dependencies]
+packaging = "*"
+pyyaml = "*"
+toml = "*"
+
+[package.extras]
+pipenv = ["pipenv"]
+
+[[package]]
+category = "dev"
 description = "Removes commented-out code."
 name = "eradicate"
 optional = false
@@ -791,6 +807,21 @@ typing-extensions = ">=3.7,<4.0"
 
 [[package]]
 category = "dev"
+description = "Checks installed dependencies for known vulnerabilities."
+name = "safety"
+optional = false
+python-versions = ">=3.5"
+version = "1.9.0"
+
+[package.dependencies]
+Click = ">=6.0"
+dparse = ">=0.5.1"
+packaging = "*"
+requests = "*"
+setuptools = "*"
+
+[[package]]
+category = "dev"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
@@ -836,6 +867,14 @@ version = "6.14.1"
 build = ["setuptools-git", "wheel", "twine"]
 docs = ["sphinx", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
 test = ["pytest (>=3.6)", "pytest-cov", "pytest-django", "zope.component", "sybil", "twisted", "mock", "django (<2)", "django"]
+
+[[package]]
+category = "dev"
+description = "Python Library for Tom's Obvious, Minimal Language"
+name = "toml"
+optional = false
+python-versions = "*"
+version = "0.10.1"
 
 [[package]]
 category = "dev"
@@ -941,7 +980,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "f8be4e2cf5637f96afd5349257ecc7bef6d6c8f0eb0b19ac1d026169ca529dee"
+content-hash = "20e4ac716830f096fcdecb84a63b0995cac88fc93adf7255b3c3bdc2f564bead"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -1024,6 +1063,10 @@ dependencies = [
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
     {file = "docutils-0.16.tar.gz", hash = "sha256:c2de3a60e9e7d07be26b7f2b00ca0309c207e06c100f9cc2a94931fc75a478fc"},
+]
+dparse = [
+    {file = "dparse-0.5.1-py3-none-any.whl", hash = "sha256:e953a25e44ebb60a5c6efc2add4420c177f1d8404509da88da9729202f306994"},
+    {file = "dparse-0.5.1.tar.gz", hash = "sha256:a1b5f169102e1c894f9a7d5ccf6f9402a836a5d24be80a986c7ce9eaed78f367"},
 ]
 eradicate = [
     {file = "eradicate-1.0.tar.gz", hash = "sha256:4ffda82aae6fd49dfffa777a857cb758d77502a1f2e0f54c9ac5155a39d2d01a"},
@@ -1307,6 +1350,10 @@ returns = [
     {file = "returns-0.14.0-py3-none-any.whl", hash = "sha256:6b529544ec64dffce72dd183165ed76acfd41bb1a17eb08f2fc0df85c74c9e89"},
     {file = "returns-0.14.0.tar.gz", hash = "sha256:42e490d7e35ce6ba939bcfedaf1173b4b8cec286bdd1c3792043368f08cd0125"},
 ]
+safety = [
+    {file = "safety-1.9.0-py2.py3-none-any.whl", hash = "sha256:86c1c4a031fe35bd624fce143fbe642a0234d29f7cbf7a9aa269f244a955b087"},
+    {file = "safety-1.9.0.tar.gz", hash = "sha256:23bf20690d4400edc795836b0c983c2b4cbbb922233108ff925b7dd7750f00c9"},
+]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
     {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
@@ -1326,6 +1373,10 @@ stevedore = [
 testfixtures = [
     {file = "testfixtures-6.14.1-py2.py3-none-any.whl", hash = "sha256:30566e24a1b34e4d3f8c13abf62557d01eeb4480bcb8f1745467bfb0d415a7d9"},
     {file = "testfixtures-6.14.1.tar.gz", hash = "sha256:58d2b3146d93bc5ddb0cd24e0ccacb13e29bdb61e5c81235c58f7b8ee4470366"},
+]
+toml = [
+    {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},
+    {file = "toml-0.10.1.tar.gz", hash = "sha256:926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f"},
 ]
 tornado = [
     {file = "tornado-6.0.4-cp35-cp35m-win32.whl", hash = "sha256:5217e601700f24e966ddab689f90b7ea4bd91ff3357c3600fa1045e26d68e55d"},
