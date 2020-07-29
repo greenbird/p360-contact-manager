@@ -1,0 +1,20 @@
+{
+    "test": "test",
+    "authkey": "some authkey",
+    "p360_base_url": "baseurl",
+    "brreg_base_url": "baseurl",
+    "worklist": "worklist.json",
+    "municipalities": "0301",
+    "cached": false,
+    "dry": false,
+    "error_margin": 50,
+    "brreg_search_criteria": {
+        "organisasjonsform": ["AAFY", "ADOS", "ANNA", "ANS", "AS", "ASA", "BA", "BBL", "BEDR", "BRL", "DA", "ENK", "EOFG", "ESEK", "FKF", "FLI", "FYLK", "GFS", "IKJP", "IKS", "KF", "KIRK", "KOMM", "KS", "KTRF", "NUF", "OPMV", "ORGL", "PERS", "PK", "PRE", "SA", "SAM", "SE", "SF", "SPA", "STAT", "STI", "SÆR", "TVAM", "VPFO"],
+        "konkurs": false,
+        "fraAntallAnsatte": 1,
+        "registrertIMvaregisteret": true,
+        "registrertIForetaksregisteret": true,
+        "naeringskode": "A,C,D,E,F,I,K,L,M,N,O,P,Q,R,S",
+        "size": 100
+    }
+}

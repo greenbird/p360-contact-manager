@@ -133,9 +133,11 @@ class ReadLocalFile(object):
 @dataclass(frozen=True, slots=True)
 class WriteLocalFile(object):
     """
-    Reads local file.
+    Writes local file.
 
-    :param file_path: path to the file to read.
+    :param string_data: Data to write to file
+    :type string_data: str
+    :param file_path: writes file to this path.
     :type file_path: str
 
     :return: Success[bytes], Success[str], Failure[Exception]
