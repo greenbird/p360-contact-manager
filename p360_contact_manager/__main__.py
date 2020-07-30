@@ -18,22 +18,22 @@ from p360_contact_manager.injected import (
     SynchronizeScope,
     UpdateScope,
 )
+from p360_contact_manager.settings import LoadSettings
 
 ConfigureLogging()()
 log = logging.getLogger('main')
 
-args = ArgsParser()(sys.argv[1:]).unwrap()
+# parse commandline arguments and filter out empty ones.
+args = ArgsParser()(sys.argv[1:]).map(vars).unwrap()
+filtered_args = dict(filter(
+    lambda elem: elem[1] is not None, args.items(),
+))
+# load settings file and update dict with commandline args
+settings = LoadSettings()().unwrap()
+settings.update(filtered_args)
 
-Scope = Injector.let(
-    dry=args.dry,
-    authkey=args.authkey,
-    error_margin=args.error_margin,
-    p360_base_url=args.p360_base_url,
-    brreg_base_url=args.brreg_base_url,
-    kommune_numbers=args.kommune_numbers,
-    worklist=args.worklist,
-    cache_file='cache.json',
-)
+# initialize DI scope with our settings
+Scope = Injector.let(**settings)
 
 functions = {
     'test': PingScope,
@@ -46,9 +46,9 @@ functions = {
 
 log.info('Starting program')
 log.debug('settings: %s', Scope)
-log.info('action: %s', args.action)
-action = (Scope & functions[args.action])
-if args.cached:
+log.info('action: %s', settings.get('action'))
+action = (Scope & functions[settings['action']])
+if settings.get('cached'):
     log.info('Using cached data')
     action = action.let(
         get_all_enterprises=p360.GetAllCachedEnterprises,

@@ -5,7 +5,7 @@ from attr import dataclass
 from returns.curry import partial
 from returns.functions import tap
 from returns.pipeline import flow
-from returns.pointfree import bind, map_
+from returns.pointfree import bind, map_, rescue
 from returns.result import ResultE, safe
 from typing_extensions import final
 
@@ -27,6 +27,7 @@ class LoadSettings(object):
             self.filename,
             partial(self._read_file, mode='r'),
             bind(safe(json.loads)),
+            rescue(safe(lambda _: {})),
         )
 
 

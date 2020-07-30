@@ -17,6 +17,12 @@ def test_loading_settings(mocker):
     assert loaded.unwrap() == expected
 
 
+def test_non_existing_file_returns_empty_dict():
+    loaded = LoadSettings('tests/does_not_exist.json')()
+    assert is_successful(loaded)
+    assert not len(loaded.unwrap())
+
+
 def test_storing_settings(mocker):
     read_patch = mocker.patch(
         'p360_contact_manager.common.ReadLocalFile.__call__',

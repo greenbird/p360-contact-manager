@@ -68,7 +68,6 @@ class ArgsParser(object):
             '--p360_base_url',
             type=str,
             help='Base url to ContactService API',
-            default=None,
         )
 
         self._parser.add_argument(

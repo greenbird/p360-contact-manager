@@ -4,7 +4,7 @@
     "brreg_base_url": "baseurl",
     "worklist": "worklist.json",
     "cache_file": "cache.json",
-    "municipalities": "0301",
+    "kommune_numbers": "0301",
     "cached": false,
     "dry": false,
     "error_margin": 50,
