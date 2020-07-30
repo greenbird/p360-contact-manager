@@ -10,14 +10,7 @@ from dependencies import Injector
 from p360_contact_manager.api import p360
 from p360_contact_manager.arguments import ArgsParser
 from p360_contact_manager.common import ConfigureLogging, ReadLocalFile
-from p360_contact_manager.injected import (
-    BrregSynchronizeScope,
-    CacheEnterprisesScope,
-    DuplicatesScope,
-    PingScope,
-    SynchronizeScope,
-    UpdateScope,
-)
+from p360_contact_manager.injected import injected_functions
 from p360_contact_manager.settings import LoadSettings
 
 ConfigureLogging()()
@@ -35,19 +28,10 @@ settings.update(filtered_args)
 # initialize DI scope with our settings
 Scope = Injector.let(**settings)
 
-functions = {
-    'test': PingScope,
-    'brreg_synchronize': BrregSynchronizeScope,
-    'synchronize': SynchronizeScope,
-    'cache_enterprises': CacheEnterprisesScope,
-    'duplicates': DuplicatesScope,
-    'update': UpdateScope,
-}
-
 log.info('Starting program')
 log.debug('settings: %s', Scope)
 log.info('action: %s', settings.get('action'))
-action = (Scope & functions[settings['action']])
+action = (Scope & injected_functions[settings['action']])
 if settings.get('cached'):
     log.info('Using cached data')
     action = action.let(

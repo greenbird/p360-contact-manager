@@ -105,3 +105,13 @@ SynchronizeScope = Injector.let(
     read=common.ReadLocalFile,
     write=common.WriteLocalFile,
 )
+
+
+injected_functions = {
+    'test': PingScope,
+    'brreg_synchronize': BrregSynchronizeScope,
+    'synchronize': SynchronizeScope,
+    'cache_enterprises': CacheEnterprisesScope,
+    'duplicates': DuplicatesScope,
+    'update': UpdateScope,
+}
