@@ -10,20 +10,23 @@ from dependencies import Injector
 from p360_contact_manager.api import p360
 from p360_contact_manager.arguments import ArgsParser
 from p360_contact_manager.common import ConfigureLogging, ReadLocalFile
+from p360_contact_manager.environment_variables import (
+    ParseEnvironmentVariables,
+)
 from p360_contact_manager.injected import injected_functions
 from p360_contact_manager.settings import LoadSettings
 
 ConfigureLogging()()
 log = logging.getLogger('main')
 
-# parse commandline arguments and filter out empty ones.
-args = ArgsParser()(sys.argv[1:]).map(vars).unwrap()
-filtered_args = dict(filter(
-    lambda elem: elem[1] is not None, args.items(),
-))
-# load settings file and update dict with commandline args
+# load args, envs and settings
+args = ArgsParser()(sys.argv[1:]).unwrap()
+env_vars = ParseEnvironmentVariables()().unwrap()
 settings = LoadSettings()().unwrap()
-settings.update(filtered_args)
+
+# Update with env vars then args to overwrite
+settings.update(env_vars)
+settings.update(args)
 
 # initialize DI scope with our settings
 Scope = Injector.let(**settings)

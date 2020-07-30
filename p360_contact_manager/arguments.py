@@ -36,7 +36,11 @@ class ArgsParser(object):
     def __call__(self, args):
         """Parse command-line arguments."""
         self._add_arguments()
-        return self._parser.parse_args(args)
+        args = vars(self._parser.parse_args(args))  # noqa: WPS421
+        # filter out None valued arguments and return
+        return dict(filter(
+            lambda elem: elem[1] is not None, args.items(),
+        ))
 
     def _add_arguments(self) -> None:
         self._parser.add_argument(
