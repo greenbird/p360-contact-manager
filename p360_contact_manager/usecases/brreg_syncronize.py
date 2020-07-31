@@ -15,7 +15,7 @@ RECNO: Final = 'Recno'
 @final
 @dataclass(frozen=True, slots=True)
 class BrregSyncronize(object):
-    """Find Enterprises in brreg and create 'create' payloads for p360."""
+    """Find Enterprises in brreg and create 'create' worklist for p360."""
 
     _kommune_numbers: str
 
@@ -23,7 +23,7 @@ class BrregSyncronize(object):
     _write: Callable
     _get_country: Callable
 
-    _brreg_worklist: str = 'worklist_brreg_syncronize'
+    _output: str = 'worklist_brreg_synchronize.json'
     _brreg_search_criteria: dict = {}
     _log = logging.getLogger('usecases.BrregSyncronize')
 
@@ -41,7 +41,7 @@ class BrregSyncronize(object):
 
     def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
-            self._brreg_worklist,
+            self._output,
             output_data,
         )
 

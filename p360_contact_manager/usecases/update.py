@@ -3,7 +3,6 @@
 """Update data with p360 through UpdateEnterprise api endpoint."""
 import json
 import logging
-from datetime import datetime
 from typing import Callable
 
 from attr import dataclass
@@ -27,7 +26,7 @@ class Update(object):
     _read: Callable
     _write: Callable
 
-    _output_update: str = 'result_update'
+    _output: str = 'result_update'
     _log = logging.getLogger('usecases.Update')
 
     def __call__(self) -> ResultE[bool]:
@@ -38,15 +37,12 @@ class Update(object):
             bind(self._get_update_list),
             bind(self._handle_worklist),
             bind(safe(json.dumps)),
-            bind(self._write_result),
+            bind(self._write_file),
         )
 
-    def _write_result(self, output_data) -> ResultE[bool]:
+    def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
-            '{name}_{date}.json'.format(
-                name=self._output_update,
-                date=datetime.now().isoformat(),
-            ),
+            self._output,
             output_data,
         )
 

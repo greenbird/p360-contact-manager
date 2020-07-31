@@ -3,7 +3,7 @@
     "p360_base_url": "baseurl",
     "brreg_base_url": "baseurl",
     "worklist": "worklist.json",
-    "brreg_worklist": "brreg_synchronize_worklist",
+    "output": "result.json",
     "output_synchronize": "result_synchronize",
     "output_update": "result_update",
     "cache_file": "cache.json",

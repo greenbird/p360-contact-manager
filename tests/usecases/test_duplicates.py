@@ -44,7 +44,7 @@ def test_create_empty_duplicate_worklist_file(mocker):
     assert Duplicates(
         lambda: Success(test_data),  # _get_all_enterprises
         WriteLocalFile(),  # _write
-        duplicate_worklist='outputfile.json',  # _duplicate_worklist
+        output='outputfile.json',  # _duplicate_worklist
         duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
@@ -66,7 +66,7 @@ def test_recno_one_enterprises_are_skipped(mocker):
     assert Duplicates(
         lambda: Success(test_data),  # _get_all_enterprises
         WriteLocalFile(),  # _write
-        duplicate_worklist='outputfile.json',  # _duplicate_worklist
+        output='outputfile.json',  # _duplicate_worklist
         duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
@@ -87,7 +87,7 @@ def test_create_duplicate_worklist_file(mocker):
     assert Duplicates(
         lambda: Success(test_data),  # _get_all_enterprises
         WriteLocalFile(),  # _write
-        duplicate_worklist='outputfile.json',  # _duplicate_worklist
+        output='outputfile.json',  # _duplicate_worklist
         duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(

@@ -2,6 +2,7 @@ import json
 
 from returns.result import Success
 
+from p360_contact_manager.common import WriteLocalFile
 from p360_contact_manager.usecases.synchronize import Synchronize
 
 worklist = json.dumps([
@@ -33,10 +34,10 @@ worklist = json.dumps([
 
 def test_create_empty_duplicate_worklist_file(mocker):
     """Test finding duplicates work success."""
-    local_write_patch = mocker.patch(
-        'p360_contact_manager.usecases.synchronize.Synchronize._write_result',
+    write_patch = mocker.patch(
+        'p360_contact_manager.common.WriteLocalFile.__call__',
     )
-    local_write_patch.return_value = Success(True)
+    write_patch.return_value = Success(True)
 
     assert Synchronize(
         'worklistfile.json',  # _worklist
@@ -50,10 +51,12 @@ def test_create_empty_duplicate_worklist_file(mocker):
             },
         ),  # SynchronizeEnterprise
         lambda _filename, _mode: Success(worklist),  # _read
-        lambda _filaneme, _bytes: Success(True),  # _write
+        WriteLocalFile(),
+        output='outputfile.json',
     )().unwrap()
 
-    local_write_patch.assert_called_once_with(
+    write_patch.assert_called_once_with(
+        'outputfile.json',
         json.dumps(
             {'errors': 0, 'synchronized': ['994921142'], 'failed': []},
         ),

@@ -9,9 +9,10 @@ class Argument(Enum):
     """Helper dataclass for our arguments."""
 
     authkey: Final[str] = 'authkey'
+    output: Final[str] = 'output'
+    worklist: Final[str] = 'worklist'
     p360_base_url: Final[str] = 'p360_base_url'
     brreg_base_url: Final[str] = 'brreg_base_url'
-    worklist: Final[str] = 'worklist'
     kommune_numbers: Final[str] = 'kommune_numbers'
     cached: Final[str] = 'cached'
     dry: Final[str] = 'dry'

@@ -58,7 +58,7 @@ def test_create_synchronize_worklist_file(mocker):
         ),  # _get_all_organizations
         WriteLocalFile(),  # _write
         GetCountryCode(),  # _get_country
-        brreg_worklist='outputfile.json',  # _brreg_worklist
+        output='outputfile.json',  # _output
         brreg_search_criteria={
             'navn': 'GREENBIRD',
             'naeringskode': 'J',

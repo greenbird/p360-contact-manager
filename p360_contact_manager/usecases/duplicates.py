@@ -22,7 +22,7 @@ class Duplicates(object):
     _get_all_enterprises: Callable
     _write: Callable
 
-    _duplicate_worklist: str = 'duplicate_worklist.json'
+    _output: str = 'duplicate_worklist.json'
     _duplicate_remove_payload: dict = {
         'Recno': None,
         'Active': False,
@@ -44,7 +44,7 @@ class Duplicates(object):
 
     def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
-            self._duplicate_worklist,
+            self._output,
             output_data,
         )
 

@@ -3,7 +3,6 @@
 """Synchronize data with p360 through SynchronizeEnterprise api endpoint."""
 import json
 import logging
-from datetime import datetime
 from typing import Callable
 
 from attr import dataclass
@@ -25,7 +24,7 @@ class Synchronize(object):
     _read: Callable
     _write: Callable
 
-    _output_synchronize: str = 'result_synchronize'
+    _output: str = 'result_synchronize.json'
     _log = logging.getLogger('usecases.Synchronize')
 
     def __call__(self) -> ResultE[bool]:
@@ -35,15 +34,12 @@ class Synchronize(object):
             bind(safe(json.loads)),
             bind(self._handle_worklist),
             bind(safe(json.dumps)),
-            bind(self._write_result),
+            bind(self._write_file),
         )
 
-    def _write_result(self, output_data) -> ResultE[bool]:
+    def _write_file(self, output_data) -> ResultE[bool]:
         return self._write(
-            '{name}_{date}.json'.format(
-                name=self._output_synchronize,
-                date=datetime.now().isoformat(),
-            ),
+            self._output,
             output_data,
         )
 

@@ -42,7 +42,7 @@ class ArgsParser(object):
             lambda elem: elem[1] is not None, args.items(),
         ))
 
-    def _add_arguments(self) -> None:
+    def _add_arguments(self) -> None:  # noqa: WPS213 okay to have 9 expressions
         self._parser.add_argument(
             'action',
             choices=[
@@ -57,6 +57,21 @@ class ArgsParser(object):
                 'synchronize',
             ],
             help='test connection, cache enterprises, worklist, remove, enrich',
+        )
+
+        self._parser.add_argument(
+            '-o',
+            '--output',
+            type=str,
+            help='filename for output file',
+        )
+
+        self._parser.add_argument(
+            '-w',
+            '--worklist',
+            type=str,
+            help='worklist to use',
+            default='worklist.json',
         )
 
         self._parser.add_argument(
@@ -83,14 +98,6 @@ class ArgsParser(object):
         )
 
         self._parser.add_argument(
-            '-w',
-            '--worklist',
-            type=str,
-            help='worklist to use when updating',
-            default='remove_worklist.json',
-        )
-
-        self._parser.add_argument(
             '-kn',
             '--kommune_numbers',
             type=str,
@@ -111,7 +118,7 @@ class ArgsParser(object):
             '--dry',
             action='store_true',
             default=False,
-            help='This will prevent any updates from actually being sent in remove',  # noqa: E501
+            help='This will prevent any update calls to p360',
         )
 
         self._parser.add_argument(
