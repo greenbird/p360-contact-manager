@@ -48,8 +48,8 @@ def test_create_empty_duplicate_worklist_file(mocker):
         duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
-        'outputfile.json',
         json.dumps({'update': [], 'skip': []}),
+        filename='outputfile.json',
     )
 
 
@@ -70,8 +70,8 @@ def test_recno_one_enterprises_are_skipped(mocker):
         duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
-        'outputfile.json',
         json.dumps({'update': [], 'skip': []}),
+        filename='outputfile.json',
     )
 
 
@@ -91,7 +91,6 @@ def test_create_duplicate_worklist_file(mocker):
         duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
-        'outputfile.json',
         json.dumps(
             {
                 'update': [
@@ -122,4 +121,5 @@ def test_create_duplicate_worklist_file(mocker):
                 ],
             },
         ),
+        filename='outputfile.json',
     )

@@ -66,6 +66,6 @@ def test_create_synchronize_worklist_file(mocker):
     )()
 
     write_patch.assert_called_once_with(
-        'outputfile.json',
         expected,
+        filename='outputfile.json',
     )

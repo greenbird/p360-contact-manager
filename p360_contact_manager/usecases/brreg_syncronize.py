@@ -3,6 +3,7 @@ import logging
 from typing import Callable
 
 from attr import dataclass
+from returns.curry import partial
 from returns.maybe import Maybe
 from returns.pipeline import flow, is_successful
 from returns.pointfree import bind
@@ -36,13 +37,7 @@ class BrregSyncronize(object):
             self._get_all_organizations,
             bind(self._create_worklist),
             bind(safe(json.dumps)),  # safe wrap impure json.dumps
-            bind(self._write_file),
-        )
-
-    def _write_file(self, output_data) -> ResultE[bool]:
-        return self._write(
-            self._output,
-            output_data,
+            bind(partial(self._write, filename=self._output)),
         )
 
     @safe

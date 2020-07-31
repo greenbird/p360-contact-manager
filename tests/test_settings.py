@@ -36,6 +36,6 @@ def test_storing_settings(mocker):
     StoreSettings()({'b': '2'})
 
     write_patch.assert_called_once_with(
-        'settings.json',
         expected,
+        filename='settings.json',
     )

@@ -37,23 +37,17 @@ class StoreSettings(object):
     """Update settings file with values from dict param."""
 
     filename: str = 'settings.json'
-    _read_file: Callable = ReadLocalFile()
-    _write_file: Callable = WriteLocalFile()
+    _read: Callable = ReadLocalFile()
+    _write: Callable = WriteLocalFile()
 
     def __call__(self, settings: dict) -> ResultE[bool]:
         """Run store settings flow."""
         return flow(
             self.filename,
-            partial(self._read_file, mode='r'),
+            partial(self._read, mode='r'),
             bind(safe(json.loads)),
             # old.update returns none, so tap it to return `old`
             map_(tap(lambda old: old.update(settings))),  # type: ignore
             bind(safe(json.dumps)),
-            bind(self._write),
-        )
-
-    def _write(self, output_data: str) -> ResultE[bool]:
-        return self._write_file(
-            self.filename,
-            output_data,
+            bind(partial(self._write, filename=self.filename)),
         )

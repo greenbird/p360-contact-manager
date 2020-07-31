@@ -5,6 +5,7 @@ import json
 from typing import Callable
 
 from attr import dataclass
+from returns.curry import partial
 from returns.result import ResultE, safe
 from typing_extensions import final
 
@@ -23,11 +24,5 @@ class CacheEnterprises(object):
         ).bind(
             safe(json.dumps),  # safe wraps impure call
         ).bind(
-            self._write_file,
-        )
-
-    def _write_file(self, output_data) -> ResultE[bool]:
-        return self._write(
-            'cache.json',
-            output_data,
+            partial(self._write, filename='cache.json'),
         )

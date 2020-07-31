@@ -6,6 +6,7 @@ import logging
 from typing import Callable
 
 from attr import dataclass
+from returns.curry import partial
 from returns.pipeline import flow, is_successful
 from returns.pointfree import bind
 from returns.result import ResultE, safe
@@ -37,13 +38,7 @@ class Update(object):
             bind(self._get_update_list),
             bind(self._handle_worklist),
             bind(safe(json.dumps)),
-            bind(self._write_file),
-        )
-
-    def _write_file(self, output_data) -> ResultE[bool]:
-        return self._write(
-            self._output,
-            output_data,
+            bind(partial(self._write, filename=self._output)),
         )
 
     @safe

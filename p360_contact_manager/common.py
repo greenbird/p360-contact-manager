@@ -145,7 +145,7 @@ class WriteLocalFile(object):
     """
 
     @safe  # noqa: WPS440, F811
-    def __call__(self, file_path: str, raw_data: str) -> bool:
+    def __call__(self, raw_data: str, file_path: str) -> bool:
         """Open the file and return its contents."""
         with open(file_path, 'w') as data_file:
             data_file.write(raw_data)

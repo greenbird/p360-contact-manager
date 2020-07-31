@@ -18,4 +18,7 @@ def test_cache_enterprises_creates_file(mocker):
         lambda: Success(test_data),  # get all enterprises
         WriteLocalFile(),
     )().unwrap() is True
-    write_patch.assert_called_once_with('cache.json', json.dumps(test_data))
+    write_patch.assert_called_once_with(
+        json.dumps(test_data),
+        filename='cache.json',
+    )

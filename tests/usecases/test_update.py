@@ -71,8 +71,8 @@ def test_create_empty_duplicate_worklist_file(mocker):
     )
 
     write_patch.assert_called_once_with(
-        'outputfile.json',
         json.dumps(
             {'errors': 0, 'updated': [1], 'failed': []},
         ),
+        filename='outputfile.json',
     )
