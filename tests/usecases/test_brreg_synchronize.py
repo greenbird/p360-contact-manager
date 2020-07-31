@@ -49,11 +49,6 @@ def test_create_synchronize_worklist_file(mocker):
     write_patch.return_value = Success(True)
 
     assert BrregSyncronize(
-        'outputfile.json',  # _brreg_worklist
-        {
-            'navn': 'GREENBIRD',
-            'naeringskode': 'J',
-        },  # _search_criteria
         '0301',  # kommune_numbers
         GetAllOrganizations(
             GetOrganizations(
@@ -63,6 +58,11 @@ def test_create_synchronize_worklist_file(mocker):
         ),  # _get_all_organizations
         WriteLocalFile(),  # _write
         GetCountryCode(),  # _get_country
+        brreg_worklist='outputfile.json',  # _brreg_worklist
+        brreg_search_criteria={
+            'navn': 'GREENBIRD',
+            'naeringskode': 'J',
+        },  # _search_criteria
     )()
 
     write_patch.assert_called_once_with(

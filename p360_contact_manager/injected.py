@@ -21,15 +21,6 @@ CommonScope = Injector.let(
 GetAllEnterprisesScope = Injector.let(
     get_all_enterprises=p360.GetAllEnterprises,
     get_enterprises=p360.GetEnterprises,
-    base_payload={
-        'parameter': {
-            'Active': True,
-            'Page': 0,
-            'MaxRows': 20,
-            'SortCriterion': 'RecnoDescending',
-            'IncludeCustomFields': False,
-        },
-    },
     post=common.PostRequest,
 )
 
@@ -51,45 +42,19 @@ CacheEnterprisesScope = GetAllEnterprisesScope.let(
 
 DuplicatesScope = GetAllEnterprisesScope.let(
     run=Duplicates,
-    duplicate_worklist='duplicates_worklist.json',
     write=common.WriteLocalFile,
-    update_payload={
-        'Recno': None,
-        'Active': False,
-        'EnterpriseNumber': '',
-    },
 )
 
 UpdateScope = Injector.let(
     run=Update,
-    update_result='update_result',
     update_enterprise=p360.UpdateEnterprise,
     post=common.PostRequest,
     read=common.ReadLocalFile,
     write=common.WriteLocalFile,
 )
 
-# Removed: BO, KBO, UTLA
-organisasjonsforms = [  # noqa: WPS317
-    'AAFY', 'ADOS', 'ANNA', 'ANS', 'AS', 'ASA', 'BA', 'BBL', 'BEDR', 'BRL',
-    'DA', 'ENK', 'EOFG', 'ESEK', 'FKF', 'FLI', 'FYLK', 'GFS', 'IKJP', 'IKS',
-    'KF', 'KIRK', 'KOMM', 'KS', 'KTRF', 'NUF', 'OPMV', 'ORGL', 'PERS', 'PK',
-    'PRE', 'SA', 'SAM', 'SE', 'SF', 'SPA', 'STAT', 'STI', 'SÆR', 'TVAM',
-    'VPFO',
-]
-
 BrregSynchronizeScope = Injector.let(
     run=BrregSyncronize,
-    brreg_worklist='brreg_syncronize_worklist.json',
-    search_criteria={
-        'organisasjonsform': ','.join(organisasjonsforms),
-        'konkurs': False,
-        'fraAntallAnsatte': 1,
-        'registrertIMvaregisteret': True,
-        'registrertIForetaksregisteret': True,
-        'naeringskode': 'A,C,D,E,F,I,K,L,M,N,O,P,Q,R,S',
-        'size': 100,
-    },
     get_country=common.GetCountryCode,
     get_all_organizations=brreg.GetAllOrganizations,
     get_organizations=brreg.GetOrganizations,
@@ -99,7 +64,6 @@ BrregSynchronizeScope = Injector.let(
 
 SynchronizeScope = Injector.let(
     run=Synchronize,
-    synchronize_result='synchronize_result',
     synchronize_enterprise=p360.SynchronizeEnterprise,
     post=common.PostRequest,
     read=common.ReadLocalFile,

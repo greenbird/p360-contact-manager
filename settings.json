@@ -3,6 +3,9 @@
     "p360_base_url": "baseurl",
     "brreg_base_url": "baseurl",
     "worklist": "worklist.json",
+    "brreg_worklist": "brreg_synchronize_worklist",
+    "output_synchronize": "result_synchronize",
+    "output_update": "result_update",
     "cache_file": "cache.json",
     "kommune_numbers": "0301",
     "cached": false,
@@ -16,5 +19,19 @@
         "registrertIForetaksregisteret": true,
         "naeringskode": "A,C,D,E,F,I,K,L,M,N,O,P,Q,R,S",
         "size": 100
+    },
+    "p360_search_criteria": {
+        "parameter": {
+            "Active": true,
+            "Page": 0,
+            "MaxRows": 20,
+            "SortCriterion": "RecnoDescending",
+            "IncludeCustomFields": false
+        }
+    },
+    "duplicate_remove_payload": {
+        "Recno": null,
+        "Active": false,
+        "EnterpriseNumber": ""
     }
 }

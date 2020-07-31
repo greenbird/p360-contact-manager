@@ -39,7 +39,6 @@ def test_create_empty_duplicate_worklist_file(mocker):
     local_write_patch.return_value = Success(True)
 
     assert Synchronize(
-        'outputfile.json',  # _synchronize_result
         'worklistfile.json',  # _worklist
         50,  # _error_margin
         lambda _: Success(

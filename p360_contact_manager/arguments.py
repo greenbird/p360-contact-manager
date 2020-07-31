@@ -48,8 +48,8 @@ class ArgsParser(object):
             choices=[
                 'test',
                 'cache_enterprises',
-                'find_malformed_external',
-                'find_malformed_internal',
+                # 'find_malformed_external',
+                # 'find_malformed_internal',
                 'duplicates',
                 'enrich',
                 'update',

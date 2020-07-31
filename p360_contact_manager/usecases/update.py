@@ -20,7 +20,6 @@ RECNO: Final = 'Recno'
 class Update(object):
     """Update worklist data with p360."""
 
-    _update_result: str
     _worklist: str
     _error_margin: int
 
@@ -28,6 +27,7 @@ class Update(object):
     _read: Callable
     _write: Callable
 
+    _output_update: str = 'result_update'
     _log = logging.getLogger('usecases.Update')
 
     def __call__(self) -> ResultE[bool]:
@@ -44,7 +44,7 @@ class Update(object):
     def _write_result(self, output_data) -> ResultE[bool]:
         return self._write(
             '{name}_{date}.json'.format(
-                name=self._update_result,
+                name=self._output_update,
                 date=datetime.now().isoformat(),
             ),
             output_data,

@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""Code to produce a list of organizations from ContactService api."""
-
 import json
 import logging
 from typing import Callable
@@ -21,22 +17,22 @@ RECNO: Final = 'Recno'
 class BrregSyncronize(object):
     """Find Enterprises in brreg and create 'create' payloads for p360."""
 
-    _brreg_worklist: str
-    _search_criteria: dict
     _kommune_numbers: str
 
     _get_all_organizations: Callable
     _write: Callable
     _get_country: Callable
 
+    _brreg_worklist: str = 'worklist_brreg_syncronize'
+    _brreg_search_criteria: dict = {}
     _log = logging.getLogger('usecases.BrregSyncronize')
 
     def __call__(self) -> ResultE[bool]:
         """Call api get list and write to file."""
-        self._search_criteria['kommunenummer'] = self._kommune_numbers
+        self._brreg_search_criteria['kommunenummer'] = self._kommune_numbers
 
         return flow(
-            self._search_criteria,
+            self._brreg_search_criteria,
             self._get_all_organizations,
             bind(self._create_worklist),
             bind(safe(json.dumps)),  # safe wrap impure json.dumps

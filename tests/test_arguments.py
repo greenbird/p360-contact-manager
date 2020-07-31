@@ -177,9 +177,8 @@ class TestArgsParser(object):  # noqa: WPS214
         """Test invalid action key."""
         response = self.parser(['clean_code', '-ak', AUTH_KEY])
 
-        string = 'error: argument action: invalid choice: {0}{1}{2}{3}'.format(
+        string = 'error: argument action: invalid choice: {0}{1}{2}'.format(
             "'clean_code' (choose from 'test', 'cache_enterprises', ",
-            "'find_malformed_external', 'find_malformed_internal', ",
             "'duplicates', 'enrich', 'update', 'brreg_synchronize', ",
             "'synchronize')",
         )

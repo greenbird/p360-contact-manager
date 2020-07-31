@@ -42,10 +42,10 @@ def test_create_empty_duplicate_worklist_file(mocker):
     test_data['Enterprises'].pop()
     update_payload = {'update': True}
     assert Duplicates(
-        'outputfile.json',  # _duplicate_worklist
-        update_payload,  # _update_payload
         lambda: Success(test_data),  # _get_all_enterprises
         WriteLocalFile(),  # _write
+        duplicate_worklist='outputfile.json',  # _duplicate_worklist
+        duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
         'outputfile.json',
@@ -64,10 +64,10 @@ def test_recno_one_enterprises_are_skipped(mocker):
     test_data['Enterprises'][0]['Categories'] = ['recno:1']
     update_payload = {'update': True}
     assert Duplicates(
-        'outputfile.json',  # _duplicate_worklist
-        update_payload,  # _update_payload
         lambda: Success(test_data),  # _get_all_enterprises
         WriteLocalFile(),  # _write
+        duplicate_worklist='outputfile.json',  # _duplicate_worklist
+        duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
         'outputfile.json',
@@ -85,10 +85,10 @@ def test_create_duplicate_worklist_file(mocker):
     test_data = enterprises
     update_payload = {'update': True}
     assert Duplicates(
-        'outputfile.json',  # _duplicate_worklist
-        update_payload,  # _update_payload
         lambda: Success(test_data),  # _get_all_enterprises
         WriteLocalFile(),  # _write
+        duplicate_worklist='outputfile.json',  # _duplicate_worklist
+        duplicate_remove_payload=update_payload,
     )().unwrap() is True
     write_patch.assert_called_once_with(
         'outputfile.json',

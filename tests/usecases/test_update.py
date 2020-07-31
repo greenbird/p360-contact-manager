@@ -53,12 +53,12 @@ def test_create_empty_duplicate_worklist_file(mocker):
     )
 
     assert Update(
-        'outputfile.json',  # _update_result
         'worklistfile.json',  # _worklist
         50,  # _error_margin
         UpdateEnterprise('authkey', 'base_url', PostRequest()),
         lambda _filename, _mode: Success(worklist),  # _read
         lambda _filename, _bytes: Success(True),  # _write
+        output_update='outputfile.json',  # _update_result
     )().unwrap()
 
     api_patch.assert_called_once_with(

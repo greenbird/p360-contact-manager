@@ -19,11 +19,15 @@ SKIP: Final[str] = 'skip'
 class Duplicates(object):
     """Produce worklist that contains entries which has duplicates in p360."""
 
-    _duplicate_worklist: str
-    _update_payload: dict
     _get_all_enterprises: Callable
     _write: Callable
 
+    _duplicate_worklist: str = 'duplicate_worklist.json'
+    _duplicate_remove_payload: dict = {
+        'Recno': None,
+        'Active': False,
+        'EnterpriseNumber': '',
+    }
     _log = logging.getLogger('produce_list')
 
     def __call__(self) -> ResultE[bool]:
@@ -109,7 +113,7 @@ class Duplicates(object):
         update_list = []
 
         for enterprise in enterprises[UPDATE]:
-            payload = deepcopy(self._update_payload)
+            payload = deepcopy(self._duplicate_remove_payload)
             payload[RECNO] = enterprise[RECNO]
             update_list.append({
                 'original_data': enterprise,

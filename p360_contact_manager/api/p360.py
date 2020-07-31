@@ -168,12 +168,20 @@ class GetAllEnterprises(object):
     """Call p360 api and return all enterprises."""
 
     _get_enterprises: Callable
-    _base_payload: dict
+    _p360_search_criteria: dict = {
+        'parameter': {
+            'Active': True,
+            'Page': 0,
+            'MaxRows': 20,
+            'SortCriterion': 'RecnoDescending',
+            'IncludeCustomFields': False,
+        },
+    }
 
     @safe
     def __call__(self) -> dict:
         """Use payload and get all enterprises."""
-        payload = deepcopy(self._base_payload)
+        payload = deepcopy(self._p360_search_criteria)
 
         aggregated = self._get_enterprises(payload).alt(
             raise_exception,

@@ -18,7 +18,6 @@ from typing_extensions import final
 class Synchronize(object):
     """Synchronize worklist data with p360."""
 
-    _synchronize_result: str
     _worklist: str
     _error_margin: int
 
@@ -26,6 +25,7 @@ class Synchronize(object):
     _read: Callable
     _write: Callable
 
+    _output_synchronize: str = 'result_synchronize'
     _log = logging.getLogger('usecases.Synchronize')
 
     def __call__(self) -> ResultE[bool]:
@@ -41,7 +41,7 @@ class Synchronize(object):
     def _write_result(self, output_data) -> ResultE[bool]:
         return self._write(
             '{name}_{date}.json'.format(
-                name=self._synchronize_result,
+                name=self._output_synchronize,
                 date=datetime.now().isoformat(),
             ),
             output_data,
