@@ -341,7 +341,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../argument_list/" title="List of Arguments" class="md-nav__link">
+    <a href="../arguments/" title="List of Arguments" class="md-nav__link">
       List of Arguments
     </a>
   </li>
@@ -474,14 +474,15 @@
 <li>environment variables</li>
 <li>commandline arguments</li>
 </ul>
-<p>Where commandline arguments overwrites environment variables which overwrites arguments set in settings.</p>
+<p>Where commandline arguments overwrites environment variables which in turn overwrites arguments set in settings.json.</p>
 <p>The required arguments for each <code>action</code> are different, but mostly it boils down to <code>--authkey</code>, <code>--output</code>, <code>--worklist</code> and two url arguments <code>p360_base_url</code> and <code>brreg_base_url</code></p>
 <div class="admonition note authkey">
 <p class="admonition-title">Note</p>
 <p>The authkey is here so that we can authenticate against the p360 API. Without this we cannot fetch data nor update data.</p>
 </div>
+<p>Check the <a href="../arguments">argument list</a> for all available arguments</p>
 <h2 id="settingsjson-file">Settings.json file<a class="headerlink" href="#settingsjson-file" title="Permanent link">&para;</a></h2>
-<p>The <code>settings.json</code> file can actually store all arguments that are available in this program. However, I would advice against storing <code>action</code> and possibly <code>--authkey</code> in <code>settings.json</code>. <code>action</code> because action usually need to be different each time since we are doing everything in two steps. <code>--authkey</code> because we don't encrypt it, but you can if you want to.</p>
+<p>The <code>settings.json</code> file can actually store all arguments that are available in this program. However, I would advice against storing <code>action</code> and possibly <code>--authkey</code> in <code>settings.json</code>. <code>action</code> because action usually need to be different each time since we are doing everything in two steps. <code>--authkey</code> because we don't support an encrypted key, but you can if you want to.</p>
 <p>A basic <code>settings.json</code> file looks something like this</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;authkey&quot;</span><span class="p">:</span> <span class="s2">&quot;some authkey&quot;</span><span class="p">,</span>
@@ -558,7 +559,7 @@
           </a>
         
         
-          <a href="../argument_list/" title="List of Arguments" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../arguments/" title="List of Arguments" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">

@@ -355,7 +355,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../argument_list/" title="List of Arguments" class="md-nav__link">
+    <a href="../arguments/" title="List of Arguments" class="md-nav__link">
       List of Arguments
     </a>
   </li>
@@ -496,26 +496,26 @@
                 
                   <h1>Usage</h1>
                 
-                <p>The program runs in a two-step fashion were the first step creates a <code>worklist</code>. The <code>worklist</code> is then used as input for the second step which is a <code>synchronize</code> or <code>update</code> step. We chose this way of doing it since it gives some control back to the user before possibly long running updates starts.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The examples assumes you have a <a href="/configuring#basic-settings">basic settings.json</a> file setup</p>
+                <p>The program runs in a two-step fashion were the first step creates a <code>worklist</code>. The <code>worklist</code> is then used as input for the second step which is a <code>synchronize</code> or <code>update</code> step. We chose this way of doing it since it gives some control back to the user before updates start. The speed of the updating depends entirely on how fast the api can handle our update requests. Because of that updating can take time when updating thousands of entries.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The examples assumes you have a <a href="../configuring/#settingsjson-file">basic settings.json</a> file setup.</p>
 </div>
 <h2 id="installing">Installing<a class="headerlink" href="#installing" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p><code>pip install p360-contact-manager</code></p>
-</blockquote>
+<div class="highlight"><pre><span></span><code>pip install p360-contact-manager
+</code></pre></div>
+
 <h2 id="configuring">Configuring<a class="headerlink" href="#configuring" title="Permanent link">&para;</a></h2>
-<p>please see <a href="/configuring">configuring</a></p>
+<p>please see <a href="../configuring">configuring</a></p>
 <h2 id="finding-duplicates">Finding duplicates<a class="headerlink" href="#finding-duplicates" title="Permanent link">&para;</a></h2>
 <p>In Public 360 there can be created duplicates of enterprises. To find these run the program in this</p>
 <ol>
 <li>Create Worklist
-<div class="highlight"><pre><span></span><code>python p360-contact-manager --authkey the_key --p360_base_url url -o worklist.json duplicates
+<div class="highlight"><pre><span></span><code>python p360-contact-manager -o worklist.json duplicates
 </code></pre></div></li>
-<li>Check the produced worklist json</li>
+<li>Check that the worklist.json looks good and that the update payloads contain expected data.</li>
 <li>Use worklist to update p360
-<div class="highlight"><pre><span></span><code>python p360-contact-manager --authkey the_key --p360_base_url url -w worklist.json -o result.json update
+<div class="highlight"><pre><span></span><code>python p360-contact-manager -w worklist.json -o result.json update
 </code></pre></div></li>
 </ol>
 <h2 id="synchronize-against-brnnysund-registeret">Synchronize against Brønnøysund Registeret<a class="headerlink" href="#synchronize-against-brnnysund-registeret" title="Permanent link">&para;</a></h2>
@@ -537,18 +537,22 @@
 <p>All available search criterias can be found at the <a href="https://data.brreg.no/enhetsregisteret/api/docs/index.html#enheter-sok-detaljer">brreg.no api page</a></p>
 <ol>
 <li>Create Worklist
-<code>python p360-contact-manager --brreg_base_url https://data.brreg.no/enhetsregisteret/api/ -o worklist.json brreg_synchronize</code></li>
-<li>Check that the worklist.json looks okay</li>
+<div class="highlight"><pre><span></span><code>python p360-contact-manager -o worklist.json brreg_synchronize
+</code></pre></div></li>
+<li>Check that the worklist.json looks good and that the update payloads contain expected data.</li>
 <li>Run Synchronize
-<code>python p360-contact-manager --authkey the_key --p360_base_url url -w worklist.json -o result.json synchronize</code></li>
+<div class="highlight"><pre><span></span><code>python p360-contact-manager -w worklist.json -o result.json synchronize
+</code></pre></div></li>
 </ol>
 <h2 id="caching">Caching<a class="headerlink" href="#caching" title="Permanent link">&para;</a></h2>
 <p>You can cache all enterprises found in p360 into a json file which then later can be used as the source for when finding duplicates or checking malformed. This way you don't have to query p360 which can be very slow all the time.</p>
 <ol>
 <li>Run Cache
-<code>python p360-contact-manager --authkey the_key --p360_base_url url cache</code></li>
+<div class="highlight"><pre><span></span><code>python p360-contact-manager cache
+</code></pre></div></li>
 <li>Use cache with <code>-c</code>/<code>--cached</code>
-<code>python p360-contact-manager --authkey the_key --p360_base_url url -o worklist.json --cached duplicates</code></li>
+<div class="highlight"><pre><span></span><code>python p360-contact-manager -o worklist.json --cached duplicates
+</code></pre></div></li>
 </ol>
                 
               

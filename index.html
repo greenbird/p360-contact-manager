@@ -331,7 +331,7 @@
 
 
   <li class="md-nav__item">
-    <a href="argument_list/" title="List of Arguments" class="md-nav__link">
+    <a href="arguments/" title="List of Arguments" class="md-nav__link">
       List of Arguments
     </a>
   </li>
@@ -448,29 +448,42 @@
 <a href="https://codecov.io/gh/greenbird/p360-contact-manager"><img alt="codecov" src="https://codecov.io/gh/greenbird/p360-contact-manager/branch/master/graph/badge.svg" /></a>
 <a href="https://github.com/wemake-services/wemake-python-styleguide"><img alt="wemake-python-styleguide" src="https://img.shields.io/badge/style-wemake-000000.svg" /></a></p>
 <h1 id="p360-contact-manager">P360 Contact Manager<a class="headerlink" href="#p360-contact-manager" title="Permanent link">&para;</a></h1>
-<p>While there are built in methods to syncronize against for example brønnøysundregisteret, to enrich data or update data they are slow and point and click oriented.
-There are also cases where duplicates are created by external programs.
-This program tries to fix some of those issues.</p>
+<p><strong><a href="https://greenbird.github.io/p360-contact-manager/">Documentation</a> |
+<a href="https://github.com/greenbird/p360-contact-manager">Source Code</a> |
+<a href="https://github.com/greenbird/p360-contact-manager/issues">Task Tracker</a></strong></p>
+<p>While there are existing solutions to synchronize with systems such as brønnøysundregisteret. They can be used via GUI only and are slow to enrich and update the data. Some of the tools can create duplicates that are not accepted among all the systems.</p>
+<p>This project addresses the following issues:</p>
+<ul>
+<li>Creates simple and easy to use CLI interface</li>
+<li>Runs faster than existing solutions</li>
+<li>Removes duplicates</li>
+<li>Multi-platform</li>
+</ul>
 <h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Get the package</li>
-<li><code>pip install p360-contact-manager</code></li>
-<li>Have your authkey and base url's at ready</li>
-<li>Run program:</li>
-<li>Test connection<ul>
-<li><code>python p360-contact-manager --authkey the_key --p360_base_url url test</code></li>
-</ul>
-</li>
-<li>Find duplicates<ul>
-<li><code>python p360-contact-manager --authkey the_key --p360_base_url url duplicates</code></li>
-<li>Check the file thats created if everything looks okay</li>
-</ul>
-</li>
-<li>Run update<ul>
-<li><code>python p360-contact-manager --authkey the_key --p360_base_url url --worklist duplicates_worklist.json update</code></li>
-</ul>
-</li>
-</ol>
+<p>Installing the package</p>
+<blockquote>
+<p><code>p360-contact-manager</code> is on <a href="https://pypi.org/project/p360-contact-manager/">pypi</a> and can be installed with pip</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>pip install p360-contact-manager
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the examples replace <code>your_key</code> with your api authkey and <code>your_url</code> with the url to your api.</p>
+</div>
+<p>Start with testing the connection
+<div class="highlight"><pre><span></span><code>python p360-contact-manager --authkey your_key --p360_base_url your_url <span class="nb">test</span>
+</code></pre></div></p>
+<p>Find duplicates
+<div class="highlight"><pre><span></span><code>python p360-contact-manager --authkey your_key --p360_base_url your_url duplicates
+</code></pre></div></p>
+<blockquote>
+<p>Check the file <code>duplicate_worklist.json</code> thats created if everything looks okay. The filename can also be configured by using <code>--output my_duplicate_worklist.json</code>.</p>
+</blockquote>
+<p>Run update
+<div class="highlight"><pre><span></span><code>python p360-contact-manager -ak your_key -pbu your_url --worklist duplicates_worklist.json update
+</code></pre></div></p>
+<p>This creates a file called <code>result_update.json</code> in your current working directory. This file contains a list of all enterprises which have been updated by recno. If there are any errors then those can be found in the same file with an error message and the payload that caused the error.</p>
                 
               
               
