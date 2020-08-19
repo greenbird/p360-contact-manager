@@ -8,8 +8,10 @@ authors = [
 ]
 
 license = "Apache-2.0"
-readme = "README.md"
+readme = "docs/index.md"
 repository = "https://github.com/greenbird/p360-contact-manager"
+homepage = "https://pypi.org/project/p360-contact-manager"
+documentation = "https://greenbird.github.io/p360-contact-manager"
 
 keywords = [
   "Public 360",

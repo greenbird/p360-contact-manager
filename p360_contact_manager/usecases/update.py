@@ -27,7 +27,7 @@ class Update(object):
     _read: Callable
     _write: Callable
 
-    _output: str = 'result_update'
+    _output: str = 'result_update.json'
     _log = logging.getLogger('usecases.Update')
 
     def __call__(self) -> ResultE[bool]:

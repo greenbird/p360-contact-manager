@@ -1,12 +1,12 @@
 ---
 strict: true
 site_name: p360-contact-manager
-site_description: Define a user story in the business transaction DSL.
+site_description: Public 360 contact manager. Removes duplicates, Enrich Enterprise.
 theme:
   name: material
   palette:
-    primary: deep-purple
-    accent: deep-purple
+    primary: green
+    accent: deep-orange
   icon:
     logo: material/language-python
   language: en
@@ -28,8 +28,9 @@ markdown_extensions:
 nav:
   - Home:
       - Home: index.md
-      - Why: why.md
       - Usage: usage.md
+      - Configuring: configuring.md
+      - List of Arguments: arguments.md
       - FAQ: faq.md
   - Contribution:
       - Contribution: contrib/contributing.md
