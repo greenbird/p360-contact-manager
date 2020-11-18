@@ -27,26 +27,28 @@ Installing the package
 pip install p360-contact-manager
 ```
 
+This installs the `p360` CLI command. If you have installed it in a virtualenv, then remember to activate it before usng `p360`. If you have used `poetry` to install it, run it with `poetry run p360`.
+
+
 !!! note
     In the examples replace `your_key` with your api authkey and `your_url` with the url to your api.
 
 
-
 Start with testing the connection
 ```sh
-python p360-contact-manager --authkey your_key --p360_base_url your_url test
+p360 --authkey your_key --p360_base_url your_url test
 ```
 
 
 Find duplicates
 ```sh
-python p360-contact-manager --authkey your_key --p360_base_url your_url duplicates
+p360 --authkey your_key --p360_base_url your_url duplicates
 ```
 > Check the file `duplicate_worklist.json` thats created if everything looks okay. The filename can also be configured by using `--output my_duplicate_worklist.json`.
 
 Run update
 ```sh
-python p360-contact-manager -ak your_key -pbu your_url --worklist duplicates_worklist.json update
+p360 -ak your_key -pbu your_url --worklist duplicates_worklist.json update
 ```
 
 This creates a file called `result_update.json` in your current working directory. This file contains a list of all enterprises which have been updated by recno. If there are any errors then those can be found in the same file with an error message and the payload that caused the error.

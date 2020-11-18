@@ -8,6 +8,12 @@ The program runs in a two-step fashion were the first step creates a `worklist`.
 pip install p360-contact-manager
 ```
 
+This installs the `p360` cli command on your system/in your virtualenv
+
+If you are using a virtualenv, remember to `activate` it.
+
+If you are using `poetry` use `poetry run p360` to run it.
+
 ## Configuring
 please see [configuring](../configuring)
 
@@ -16,12 +22,12 @@ In Public 360 there can be created duplicates of enterprises. To find these run 
 
 1. Create Worklist
 ```shell
-python p360-contact-manager -o worklist.json duplicates
+p360 -o worklist.json duplicates
 ```
 2. Check that the worklist.json looks good and that the update payloads contain expected data.
 3. Use worklist to update p360
 ```shell
-python p360-contact-manager -w worklist.json -o result.json update
+p360 -w worklist.json -o result.json update
 ```
 
 ## Synchronize against Brønnøysund Registeret
@@ -48,12 +54,12 @@ All available search criterias can be found at the [brreg.no api page](https://d
 
 1. Create Worklist
 ```sh
-python p360-contact-manager -o worklist.json brreg_synchronize
+p360 -o worklist.json brreg_synchronize
 ```
 2. Check that the worklist.json looks good and that the update payloads contain expected data.
 3. Run Synchronize
 ```sh
-python p360-contact-manager -w worklist.json -o result.json synchronize
+p360 -w worklist.json -o result.json synchronize
 ```
 
 
@@ -62,9 +68,9 @@ You can cache all enterprises found in p360 into a json file which then later ca
 
 1. Run Cache
 ```sh
-python p360-contact-manager cache
+p360 cache
 ```
 2. Use cache with `-c`/`--cached`
 ```
-python p360-contact-manager -o worklist.json --cached duplicates
+p360 -o worklist.json --cached duplicates
 ```

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "p360-contact-manager"
-version = "1.0.0"
+version = "1.0.1"
 description = "Public 360 application by Tieto has some issues with for example duplicated contacts. This package tries to fix that and adds other functionality like synchronization(enrichment) with brreg.no."
 authors = [
     "Thomas Borgen <thomas.borgen@greenbird.com>",
@@ -45,6 +45,9 @@ mkdocs-material = "^5.4.0"
 pytest-mock = "^3.2.0"
 pytest-cov = "^2.10.0"
 safety = "^1.9.0"
+
+[tool.poetry.scripts]
+p360 = 'p360_contact_manager.cli:main'
 
 [build-system]
 requires = ["poetry>=0.12"]
