@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "p360-contact-manager"
-version = "1.0.1"
+version = "1.0.2"
 description = "Public 360 application by Tieto has some issues with for example duplicated contacts. This package tries to fix that and adds other functionality like synchronization(enrichment) with brreg.no."
 authors = [
     "Thomas Borgen <thomas.borgen@greenbird.com>",
