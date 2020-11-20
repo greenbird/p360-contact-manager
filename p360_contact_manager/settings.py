@@ -49,5 +49,5 @@ class StoreSettings(object):
             # old.update returns none, so tap it to return `old`
             map_(tap(lambda old: old.update(settings))),  # type: ignore
             bind(safe(json.dumps)),
-            bind(partial(self._write, filename=self.filename)),
+            bind(partial(self._write, file_path=self.filename)),
         )

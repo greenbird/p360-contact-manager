@@ -35,7 +35,7 @@ class Synchronize(object):
             bind(safe(json.loads)),
             bind(self._handle_worklist),
             bind(safe(json.dumps)),
-            bind(partial(self._write, filename=self._output)),
+            bind(partial(self._write, file_path=self._output)),
         )
 
     @safe

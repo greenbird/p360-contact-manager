@@ -37,7 +37,7 @@ class BrregSyncronize(object):
             self._get_all_organizations,
             bind(self._create_worklist),
             bind(safe(json.dumps)),  # safe wrap impure json.dumps
-            bind(partial(self._write, filename=self._output)),
+            bind(partial(self._write, file_path=self._output)),
         )
 
     @safe

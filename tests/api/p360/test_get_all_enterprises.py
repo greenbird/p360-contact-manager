@@ -6,6 +6,9 @@ from p360_contact_manager.common import PostRequest
 
 class ResponseObject(object):
     """mock class for response object."""
+
+    headers: dict = {'Content-Type': 'application/json'}
+
     def raise_for_status(self):
         pass  # noqa: WPS420
 
@@ -15,6 +18,9 @@ class ResponseObject(object):
 
 class GoodResponse(ResponseObject):
     """Mock class for good response."""
+
+    headers: dict = {'Content-Type': 'application/json; charset=utf-8'}
+
     def json(self):
         return {
             'Enterprises': [
@@ -43,6 +49,14 @@ class BadRequestResponse(ResponseObject):
             'ErrorMessage': 'An error message',
             'ErrorDetails': 'string',
         }
+
+
+class ResponseWithNonJsonContentType(ResponseObject):
+    """Mock class for response with non-json content-type header."""
+    headers: dict = {'Content-Type': 'text/html'}
+
+    def json(self):
+        return {}
 
 
 def test_get_all_enterprises(mocker):
@@ -85,7 +99,7 @@ def test_get_all_enterprises_failure(mocker):
 
 
 def test_get_all_enterprises_response_failure(mocker):
-    """Test update enterprise post return failure."""
+    """Test update enterprise post returns failure."""
     post = mocker.patch('p360_contact_manager.common.PostRequest.__call__')
     post.return_value = Failure(Exception('Error'))
     bad_result = GetAllEnterprises(
@@ -98,4 +112,23 @@ def test_get_all_enterprises_response_failure(mocker):
     )()
 
     assert 'Error' in str(bad_result.failure())
+    post.assert_called()
+
+
+def test_get_all_enterprises_response_with_wrong_header(mocker):  # noqa: WPS118
+    """Test update enterprise post returns failure."""
+    post = mocker.patch('p360_contact_manager.common.PostRequest.__call__')
+    post.return_value = Success(ResponseWithNonJsonContentType())
+
+    bad_result = GetAllEnterprises(
+        GetEnterprises(
+            'authkey',
+            'base_url/',
+            PostRequest(),
+        ),
+        {},
+    )()
+    assert 'Content-type "text/html" is not equal to application/json' in str(
+        bad_result.failure(),
+    )
     post.assert_called()

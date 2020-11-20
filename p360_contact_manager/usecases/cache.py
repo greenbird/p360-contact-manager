@@ -24,5 +24,5 @@ class CacheEnterprises(object):
         ).bind(
             safe(json.dumps),  # safe wraps impure call
         ).bind(
-            partial(self._write, filename='cache.json'),
+            partial(self._write, file_path='cache.json'),
         )

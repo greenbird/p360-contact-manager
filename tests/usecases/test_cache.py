@@ -20,5 +20,5 @@ def test_cache_enterprises_creates_file(mocker):
     )().unwrap() is True
     write_patch.assert_called_once_with(
         json.dumps(test_data),
-        filename='cache.json',
+        file_path='cache.json',
     )

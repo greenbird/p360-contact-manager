@@ -49,7 +49,7 @@ def test_create_empty_duplicate_worklist_file(mocker):
     )().unwrap() is True
     write_patch.assert_called_once_with(
         json.dumps({'update': [], 'skip': []}),
-        filename='outputfile.json',
+        file_path='outputfile.json',
     )
 
 
@@ -71,7 +71,7 @@ def test_recno_one_enterprises_are_skipped(mocker):
     )().unwrap() is True
     write_patch.assert_called_once_with(
         json.dumps({'update': [], 'skip': []}),
-        filename='outputfile.json',
+        file_path='outputfile.json',
     )
 
 
@@ -121,5 +121,5 @@ def test_create_duplicate_worklist_file(mocker):
                 ],
             },
         ),
-        filename='outputfile.json',
+        file_path='outputfile.json',
     )

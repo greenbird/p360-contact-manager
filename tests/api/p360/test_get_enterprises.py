@@ -6,6 +6,9 @@ from p360_contact_manager.common import PostRequest
 
 class ResponseObject(object):
     """mock class for response object."""
+
+    headers: dict = {'Content-Type': 'application/json'}
+
     def raise_for_status(self):
         pass  # noqa: WPS420
 
@@ -36,6 +39,7 @@ class GoodResponse(ResponseObject):
 
 class BadRequestResponse(ResponseObject):
     """Mock class for bad response."""
+
     def json(self):
         return {
             'Recno': 0,

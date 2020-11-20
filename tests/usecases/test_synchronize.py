@@ -59,5 +59,5 @@ def test_create_empty_duplicate_worklist_file(mocker):
         json.dumps(
             {'errors': 0, 'synchronized': ['994921142'], 'failed': []},
         ),
-        filename='outputfile.json',
+        file_path='outputfile.json',
     )

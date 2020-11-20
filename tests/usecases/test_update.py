@@ -74,5 +74,5 @@ def test_create_empty_duplicate_worklist_file(mocker):
         json.dumps(
             {'errors': 0, 'updated': [1], 'failed': []},
         ),
-        filename='outputfile.json',
+        file_path='outputfile.json',
     )

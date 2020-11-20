@@ -151,7 +151,16 @@ class GetEnterprises(object):
         if not is_successful(response):
             raise response.failure()
 
-        response_json = response.unwrap().json()
+        resp = response.unwrap()
+        content_type = resp.headers.get('Content-Type')
+        if not content_type or 'application/json' not in content_type:
+            raise RuntimeError(
+                'Content-type "{type}" is not equal to application/json'.format(
+                    type=content_type,
+                ),
+            )
+
+        response_json = resp.json()
 
         if not response_json.get('Successful'):
             raise RuntimeError(response_json['ErrorMessage'])

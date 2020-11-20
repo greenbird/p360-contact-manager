@@ -40,7 +40,7 @@ class Duplicates(object):
             bind(self._restructure_data),
             bind(self._restructure_with_payload),
             bind(safe(json.dumps)),
-            bind(partial(self._write, filename=self._output)),
+            bind(partial(self._write, file_path=self._output)),
         )
 
     @safe
