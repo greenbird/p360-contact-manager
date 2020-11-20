@@ -2,6 +2,7 @@
 
 """Code to produce a list of organizations from ContactService api."""
 import json
+import logging
 from copy import deepcopy
 from typing import Callable
 
@@ -186,6 +187,7 @@ class GetAllEnterprises(object):
             'IncludeCustomFields': False,
         },
     }
+    _log = logging.getLogger('api.p360.GetAllEnterprises')
 
     @safe
     def __call__(self) -> dict:
@@ -199,6 +201,13 @@ class GetAllEnterprises(object):
 
         for page in range(1, aggregated['TotalPageCount']):
             payload['parameter']['Page'] = page
+
+            self._log.info(
+                'Processing {page} page out of {pages} pages'.format(
+                    page=page,
+                    pages=aggregated['TotalPageCount'],
+                ),
+            )
 
             self._call_api(payload).map(
                 # Add to enterprises list in aggregated result.
