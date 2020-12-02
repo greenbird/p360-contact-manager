@@ -18,7 +18,7 @@ worklist = json.dumps(
                     'Name': 'string',
                 },
                 'payload': {
-                    'parameters': {
+                    'parameter': {
                         'update': True,
                         'Recno': 1,
                     },

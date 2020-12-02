@@ -103,7 +103,7 @@ def test_create_duplicate_worklist_file(mocker):
                             'Name': 'string',
                         },
                         'payload': {
-                            'parameters': {
+                            'parameter': {
                                 'update': True,
                                 'Recno': 1,
                             },

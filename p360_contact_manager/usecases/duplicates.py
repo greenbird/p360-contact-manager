@@ -112,7 +112,7 @@ class Duplicates(object):
             payload[RECNO] = enterprise[RECNO]
             update_list.append({
                 'original_data': enterprise,
-                'payload': {'parameters': payload},
+                'payload': {'parameter': payload},
             })
 
         enterprises[UPDATE] = update_list
